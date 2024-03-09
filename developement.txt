@@ -1,0 +1,639 @@
+﻿--------------------------------------------------------------------JSON Formatter------------------------------------------------------------------------
+
+
+
+
+CORS -- Cross Origin (bill wachavta )(url,port Different tr origin different .... mg no permission)(white list /  * for all)
+Frontend madhe PROXY ne resolve karu shakto CORS cha error
+
+
+
+
+ 
+middleWare == functions .... which does some processing
+only one method to access middleWare ...(`app.use()`)
+
+
+ 
+cookies client machine madhe store hotat ............
+........................JWT tokens nahi store hot every time send hotat create houn.
+
+
+how to re try?
+what is cookie parser?
+why token in header(bearer) is more secure?
+
+
+AWS sqs /sns ?
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+1] Intro
+------------------------------------------------------------------------------------------------------------------------------------------------
+server = software which serves
+
+C++ => crow | java => spring --------- framework for backend
+
+Runtime for JS  --> node.js / deno / bun
+
+backend server mostly will interact with ORM/ODM.
+
+Mongoose , prisma  ---> ORM/ODM.
+It is helper in data modeling.
+
+			[FILE STRUCTURE]
+
+(Readme , git , lint , prettier etc)
+package.json
+.env
+index.js
+constants
+
+----> Config
+		->(DB connection , cloudinary , razorpay connection functions)
+----> Models
+		->(Schema /definations of structure of data )
+----> Controllers
+		->(bussiness logic)
+----> Routes
+		->(Routers)
+---->Middlewares
+		->(auth)
+----> Utils
+		->(mail , upload utilities functions )
+----> More(Depends)
+
+
+API  ==>  Return Value .... can be anything
+API will handle ==>	DATA / FILE / Third Party(API).
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+2] DEPLOY
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+node/npm  -v  (check versions).
+
+[ npm init ] empty node application.
+[ "start": "node index.js"  ] -----> npm run start .... file will run
+
+
+express  --->  framework for Nodejs.(Routing mainly and Request , respose)
+just to make it easy for us to make a http server.
+reduces lines of code.
+
+
+[  const express = require( 'express') / import "express"from "express"  ] ---> different syntax.
+[ const var = require('~') ](Common JS)(Syncronus yeto)  ===  [ import  var from "~" ] (Module JS)(Asyncronus yeto)
+
+
+For  Hot Reloading ---> Nodemon 	( you know now why we want this).
+
+
+
+.env madhe ports/db connect variables lihile tr mg zala Deployment ready.
+
+Step 1] Create repo on github.(ignore    .env & node modules)
+Step 2]
+Step 3] environment variable set karay ch(port , db_pass)[port overwrite krta ....... DB_PASS nahi krnar overwrite]
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+4] Data modeling
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+1st quetions we need to ask --- WHAT/HOW we want to store data.? -------(schema / modeling)
+
+moon Modeler / eraser.io --------------- Tools for modeling
+
+First worry about what data you want to store .... (register page ,etc ) 
+
+mongoose helps to interact with DB
+
+
+[  ================important lines
+
+import mongoose from "mongoose"
+
+const user_schema = new mongoose.Schema( {} , {timestamps: true} );
+
+export const user = mongoose.model("user" , user_schema); //"user" model is created based on "user_schema" (these 2 are parameter to this function)
+============================================]
+
+mongoDB madhe name will store as "users"  .... MongoDB always stores name as [ plural &  all lower case]
+
+example:- Todo => todos / User => users / SubTodo => subtodos
+
+but we can use as "user"  because vrti bg we stored it as [const user]
+
+
+
+"required: true " he wali field also accept custom validator like ...[true , "Please enter password"]
+ane asa min/max la pn karu shakto
+
+
+
+{timestamps: true} ==> this will create 2 fields automatically  -------- vrti syntax bg
+[createdAt  & updatedAt]
+
+
+type: mongoose.Schema.Types.ObjectId
+ref:   "~~~" 
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+5] Ecommerce & Hospital MODELS
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+first think of unique field ... NOT related fields
+
+example:-   1st => category 	THEN	 2nd=>product	 THEN	 3rd=> order
+category is NOT depended on any  
+
+ata ORDER madhe  'orderItem '  lagnar 
+SO te vrti vegla Schema define karu shakto ... tyala export karay chi garaj nahi // or vegli file madhe lihun export.
+
+
+enum: ["~~" , "~~" , "~~"]  ---> choices.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+6] [ https://github.com/hiteshchoudhary/chai-backend ]
+------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+git ignore generator ..... helps .. just search it on google (https://mrkandreev.name/snippets/gitignore-generator/).
+
+[ gitkeep ]... jr temporary empty folders/files cha track thevaych asel. ... folder madhe jaun.
+
+
+package.json madhe jaun  write ["type": "module",] ------> JS files will assemble /import as module  JS.
+
+
+For  Hot Reloading ---> Nodemon 	( you know now why we want this).
+it is  'dev dependency'   .... meaning it will not go in production ... only while developement.
+
+[ npm i -D nodemon]
+Now inside package.json do 		[  "dev": "nodemon index.js" ] ----> npm run dev 
+
+
+
+[ npm i -D prettier ] ---- dev dependency important if many people work on same project.
+Now make a file named [ " .prettierrc " , " .prettierignore"]
+
+
+
+command line ne files bnav [ touch ]
+[ const var = require('~') ](Common JS)(Syncronus yeto)  ==  [ import  var from "~" ] (Module JS)(Asyncronus yeto)
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+7] DB connection
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+atlas madhe  		[0.0.0.0/0] ha ip add kr
+
+atlas vr DB banvun tikdun URL .env madhe takay cha
+
+
+Always wrap DB connection in   		try catch  	
+and DB is always in another continent SO ........ 	async await
+
+ALTERNATE FOR THIS			[.then()  ,  .catch() ]
+
+
+[  "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"  ] ..... edit this line in package.json   
+
+' -r dotenv/config ' ----> 		To preload the dotenv module and read the configuration from a file named .env in the root of your project.
+'--experimental-json-modules'  ---->	This flag enables experimental support for ECMAScript modules (ESM) when using JSON modules.
+
+
+
+dotenv.config({			| dotenv.config()
+    path: './.env'			|
+});				|	
+
+BOTH chalta hey!!
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+8]  utils
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Async function execute zala ki promise return krto
+
+app.use() // mostly for middlewares
+
+app.use(cors({				[ origin "*"  kela ki sagle allow]			
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
+}));================================================================
+
+
+
+
+
+
+Vegla vegla sources madhun DATA yeto ... like body , urL , json , form etc.
+
+app.use(express.json({limit: "16kb"})) 				[To accept json data ... limit to not overload server][ body-parser juna zala]
+
+app.use(express.urlencoded({extended: true, limit: "16kb"}))		[url chya data sathi neet format karayla (%20 , + , ...  )................. extended for nested object]
+
+app.use(express.static("public"))				[to store some assets in local folder .... name public]
+
+app.use(cookieParser())					[secure cookies]
+
+
+
+
+
+He asto actual (err , req , res , next) ---------- [next] means using middleware , it is only FLAG.
+
+
+
+
+=================================================
+higher order function ........ which can ccept function as parameter or  can return it 
+
+// const asyncHandler = () => {}
+// const asyncHandler = (func) => { return () => {} }		.....function as parameter to 2nd function
+// const asyncHandler = (func) => { return async () => {}   }
+
+Hyat fakt baher che curly braces kadtat .... jr curly brakets kadle tr [ return ] lihaychi garaj nahi !!
+
+
+const asyncHandler = (requestHandlerFn) => {
+    return (req, res, next) => {
+        Promise.resolve(requestHandlerFn(req, res, next))			//Manually invoked promise
+       .catch((err) => next(err))   	
+    }
+}
+===================================================
+To standardize errors in our code .... we overwrite some methods in Node.js Error class in [ ApiErrors.js ]
+
+The [error.stack ] property is a string describing the point in the code at which the Error was instantiated.
+
+=================STATUS CODES=======================
+Informational responses (100 – 199)
+Successful responses (200 – 299)
+Redirection messages (300 – 399)
+Client error responses (400 – 499)
+Server error responses (500 – 599)
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+9]  User and video model
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+If you want to make anything searchable in mongoDB ..... i.e. if you will be going to search that thing again & again
+THEN in model .... mark [index: true] on some field ... saglyana nahi kray ch
+
+Heavy hota ..... pn kup search krnar asel tr karay ch [ indexing ] ...... line [User] madhe [ userName HAS index: true ]
+
+
+=============
+This plugin enhances Mongoose's aggregate method by adding pagination capabilities.
+Useful when working with large datasets.
+
+- This plugin helps us to write pipeline queries
+
+[ mongoose-aggregate-paginate-v2 ] 
+import x from "mongoose-aggregate-paginate-v2";
+videoSchema.plugin( x )
+========================================================
+
+
+userSchema.pre("save", async function (next) {});
+
+userSchema.methods.isPasswordCorrect = async function(password){
+    return await bcrypt.compare(password, this.password)
+}
+
+bcrypt ----- Helps to hash your passwords
+
+JWT - bearer token .. like a key ..... [Who have this  ...is vaild]
+
+jwt.sign() => generates tokens
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+Arrow function madhe [this] nahi jat ... i.e. contex nahi jat ..... so " function(){ } "
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+To encrypt we use hooks-> pre
+1. pre => Pre middleware functions are executed one after other, when 
+each middleWare calls next.
+
+
+How to write hook? => userSchema.pre("method')
+
+There are less details present in refresh tokens
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+10]  File upload
+------------------------------------------------------------------------------------------------------------------------------------------------
+We will use multer to get file locally .... and store it locally for temporary time..... and also upload to cloudinary.
+fs -> File system built in nodejs
+
+uplaod file on cloudinary .. you know how ... simple !!
+Make it utils
+
+[ node.js->fs ] file system ... check documentation for "unlink"
+
+Because adhi save on cloudinary and if successfully  done THEN "unlink" the file from local .
+
+Multer ... check on [ node.js multer ]
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+11]  HTTP
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Header ... go see the screenshot 
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+12] controllers
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Tip:
+whenever any name is given in import statement then we MUST DO export default
+Also whenever import {} from "" syntax is used there should not be any export default
+
+console.log() kr ..... gostina  so tula kalel
+log(req.body , req.files , ...etc)
+
+NOTES:
+1. First write logic for handling data in controller folder
+2. Router 
+3. Both of these are imported in app
+
+FLOW -> 
+1.routes are declared in app.js 
+    eg: app.use("/users", userRouter)
+
+    means that whenever this url is requested control will be given to userRouter in routers folder
+2. Inside Routers folder -> This routes user to different routes/controllers
+                        i.e /users/register ? /login
+
+    LOgic:
+        Just routes user so: router.route("/register").post(registerUser)
+        Takes input as method
+
+3. Again now flow will coming to controller folder:
+i.e where logic is written
+                            
+
+    
+Good practise : "/api/v1/users"
+
+See What is POSTMAN?
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+13] register controller
+------------------------------------------------------------------------------------------------------------------------------------------------
+Middleware mostly .... adds more fields in req
+MULTER add files in req ...........i.e. now we can access [ req.files ]
+
+
+
+{ req.files?.avatar[0]?.path; } ==========> if field exist ch nahi karat ...... tr [ ? ] takla asa ki help hota .. direct error nahi det
+This is the optional chaining operator. 
+It allows you to safely access the properties of an object without causing an error if the property or any intermediate property is undefined or null.
+If any part of the chain is undefined or null, the expression will gracefully return [ undefined instead of causing an error ]. 
+{  ?.name  }
+
+
+
+
+if [ ? ] syntax doesn't work then try this ........ 
+
+if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+     coverImagePath = req.files.coverImage[0].path
+}
+
+
+
+
+[username , fullName , email , password ].some( (field)=>{return field?.trim === ""})=====> this will return true if anyone is empty.
+
+
+const createdUser = awaitUser.findById(user._id).select( "-password -refreshToken" ) 
+=======> syntax by default will select all ..... thst's why "-field1 -field2"  so not tht fields in response
+
+
+syntax multer upload ====> upload.fields([{} , {}])
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+14] POSTMAN
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+if [  export { ~~ }  ]  asa kela tr import [  import {~~} from "" ; ] asa ch 
+
+if [   export default ~~   ] asa kela tr import normal [  import ~~ from "";  ]
+
+
+ALWAYS use [ await ] whenever you interact with  DB / upload / bcrypt ...etc   ... for somethings like this
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+15] refresh & access token
+------------------------------------------------------------------------------------------------------------------------------------------------
+Refresh token ----> long lived
+access token ----> short lived
+
+
+While you have access token you can access things that you have Authorization for.
+
+After access token expires .... and you have Refresh token ... then end perticular endpoint
+AND USER WILL GET NEW [ access token ]
+
+ 
+
+Refresh token DB madhe pn save asto and user kade pn .
+
+
+When we do user.save() ... mongoDB che model kick in hotat ....
+so required field nasel tr vishay hoto ...
+Therefore .... [     .save( { validateBeforeSave: false } )      ]
+
+
+
+const options = {
+    httpOnly: true,
+    secure: true
+}
+    By default anyone could modify/write cookies 
+    But by doing these to options "true" .... now they are only modifiable by server
+
+
+
+
+json response madhe we again sending access/refresh Token 
+.... cuz if user need to store locally / NO  cookie in app development.
+
+
+
+tokens send as ..... cookie OR authorization Headers [ as "bearer <token>" ]
+
+
+*async(req , _,next)=>{} .... [  _(underscore)  ] when we are not using parameter.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+16] refresh & access token
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+refresh token endpoint in code
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+17] update controllers
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+18] subscription model
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+million subscribers pn asu shaktat ... that's why apan array of subscriber nahi banvat !!
+
+We make seperate document for subscription ...... 
+{
+	channel (subscribed to)  ,
+	user(subscriber) 
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+19] Aggregation pipelines
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Aggregation  ---> stages ---one by one
+
+1st statge chya operation ch output 2nd stage la !!
+
+aggregation use krtana mongoose madhe nahi yet ....
+THAT'S WHY ..... model ch name [ Lowercase ] and [ plural ] ...gotacha
+
+
+
+
+const channel = await User.aggregate([
+        {
+            $match:{ username: username.toLowerCase()}
+        },
+        {
+            $lookup:{
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "channel",
+                as: "subscribers"
+            }
+        },
+        {
+            $lookup: {
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "subscriber",
+                as: "subscribedTo"
+            }
+        },
+        {
+            $addFields:{
+                subscribersCount:{ $size:"$subscribers"},
+
+                subscribedToCount:{ $size:"$subscribedTo"},
+
+                isSubscribed:{ 
+                    $cond:{
+                        if:{ $in:[req.user._id , "$subscribers.subscriber"]},
+                        then:true,
+                        else:false
+                    }
+                }
+            }
+
+        },
+        {
+            $project:{
+                fullName: 1,
+                username: 1,
+                subscribersCount: 1,
+                channelsSubscribedToCount: 1,
+                isSubscribed: 1,
+                avatar: 1,
+                coverImage: 1,
+                email: 1
+            }
+        }
+
+    ]);
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+20] Aggregation sub-pipelines
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+When we get  [ _id] .... we just get string of id [ i.e.  '65b3b580980fc52bfeafd2a9'] 
+
+Actual mongoDB id is [ObjectId('65b3b580980fc52bfeafd2a9')]
+
+
+Therefore when we pass [id]  in function like  [ find() , findById() ].....
+
+Mongoose utomatically convert it into [ MongoDB ObjectId ] 
+
+
+BUT in Aggregation mongoose doesn't work ... code directly goes
+that's why we need to do this ...................................
+
+
+
+await User.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(req.user._id) //-------This line
+            }
+        }
+});
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+21] Overview
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+22]  More models
+------------------------------------------------------------------------------------------------------------------------------------------------
