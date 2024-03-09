@@ -413,6 +413,13 @@ See What is POSTMAN?
 ------------------------------------------------------------------------------------------------------------------------------------------------
 13] register controller
 ------------------------------------------------------------------------------------------------------------------------------------------------
+-Data coming from form, json is in -> req.body
+- Get all details from frontend and check on POSTMAN
+-For validations make middlewares
+            -> How to write? => Just whenever method is called right before it
+            -> upload.feilds() => array of feild objects, returns middlewares for multiple files
+
+
 Middleware mostly .... adds more fields in req
 MULTER add files in req ...........i.e. now we can access [ req.files ]
 
