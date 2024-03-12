@@ -35,7 +35,7 @@ const resgisterUser = asnycHandler (async (req, res) => {
 
 
     //3. will ask database to check the passed email for me
-    const existingUser = User.findOne({
+    const existingUser = await User.findOne({
 
         $or: [{email}, {username}]
     })
@@ -69,12 +69,13 @@ const resgisterUser = asnycHandler (async (req, res) => {
     //7.Make entry in db --> User is only talking with db
     const user = await User.create(
         {
-            fullname,
+            //model_field: variable
+            fullname: fullname,
             avatar: avatar.url,
             coverImage: coverImage?.url || "",// check fro saftey check if not uploaded
-            email,
-            password,
-            username: username.toLowerCase()
+            email: email,
+            password: password,
+            userName: username.toLowerCase()
         }
     )
 
