@@ -17,7 +17,7 @@ const resgisterUser = asnycHandler (async (req, res) => {
 
     //1.
     const {fullname, email, username, password} = req.body
-    console.log(email); 
+    // console.log(req.body.fullname); 
 
 
     //2. For all feilds: 
@@ -46,8 +46,18 @@ const resgisterUser = asnycHandler (async (req, res) => {
 
     //4-> Get files from multer
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files.coverImage[0].path;
+    // const coverImageLocalPath = req.files.coverImage[0].path;
 
+    let coverImageLocalPath;
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){
+        coverImageLocalPath = req.files.coverImage[0].path;
+    }
+
+    // console.log(req.files.avatar[0]); //-> Returns object
+    // console.log(req.files.avatar);//  -> Returns array
+
+
+    // console.log(req.files.coverImage[0]);
     if(!avatarLocalPath){
         throw new ApiError(400, "Avatar file is required")       
     }
@@ -56,8 +66,9 @@ const resgisterUser = asnycHandler (async (req, res) => {
     //5-> Upload on cloudinary this function is already made
     
     //This make take time wait and dont go further until not complete
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    
 
 
     //6. Check avatar again

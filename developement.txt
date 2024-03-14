@@ -407,7 +407,7 @@ i.e where logic is written
     
 Good practise : "/api/v1/users"
 
-See What is POSTMAN?
+See What is POSTMAN? --> Proffessional SetUp
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -431,7 +431,8 @@ It allows you to safely access the properties of an object without causing an er
 If any part of the chain is undefined or null, the expression will gracefully return [ undefined instead of causing an error ]. 
 {  ?.name  }
 
-
+// console.log(req.files.avatar[0]); //-> Returns object
+// console.log(req.files.avatar);//  -> Returns array
 
 
 if [ ? ] syntax doesn't work then try this ........ 
@@ -451,6 +452,19 @@ const createdUser = awaitUser.findById(user._id).select( "-password -refreshToke
 
 
 syntax multer upload ====> upload.fields([{} , {}])
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+FILE UPLOAD:
+
+1. Routers -> /register route is hit
+2.          -> middleware is added "upload.fields()" -> first files are stored in local storage -> uploaded in req.files
+3. Middleware   -> /register -> multer.middleWare -> upload.fields() -> controllers.js
+4. Controllers -> We are accessing req.files and fetching path, name etc and uploadOnCloudinary() is called -> cloudinary.js
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+In previous code line-49 we didnt check for undefined value 
+After chaning the code line-51 error is handled if no coverImage is provided
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 14] POSTMAN
